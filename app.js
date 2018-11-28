@@ -31,8 +31,8 @@ app.use((req, res, next) => {
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'tennis-client/build')));
 
-// app.use(indexRouter);
-// app.use('/parties', partiesRouter);
+app.use('/', indexRouter);
+app.use('/parties', partiesRouter);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{
