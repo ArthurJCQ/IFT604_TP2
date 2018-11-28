@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node ./bin/www 0.1",
     "heroku-postbuild": "cd tennis-client && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
