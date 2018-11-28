@@ -1,0 +1,16 @@
+{
+  "name": "serveur-echanges",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "heroku-postbuild": "cd tennis-client && npm install --only=dev && npm install && npm run build"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "morgan": "~1.9.0",
+    "pusher": "^2.2.0"
+  }
+}
