@@ -183,7 +183,7 @@ class Match extends Component {
     super(props);
     this.state = {
       match: [],
-      matchUpdated: false,
+      matchUpdated: true,
       toPari: false,
     }
     this.setMatch = this.setMatch.bind(this);
@@ -221,9 +221,9 @@ class Match extends Component {
       })
       .catch(err => {
         console.log(err)
-        this.setState({
-          matchUpdated: false,
-        });
+        // this.setState({
+        //   matchUpdated: false,
+        // });
       });
   }
 

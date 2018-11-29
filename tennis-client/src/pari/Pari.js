@@ -48,7 +48,7 @@ class Pari extends Component {
       super(props);
       this.state = {
         match: [],
-        data: false,
+        data: true,
         montant: null,
         joueur: '',
         pariDone: false,
