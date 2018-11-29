@@ -25,11 +25,11 @@ class MatchArray extends Component {
     caches.match('/parties')
       .then(res => {
         if (!res) throw Error("No data 'parties'");
-        if (!networkDataReceived) {
+        if (!this.state.networkDataReceived) {
           this.setState({response: res});
         }
       })
-      .catch(err => console.log(err);
+      .catch(err => console.log(err));
 
   }
 
