@@ -126,7 +126,7 @@ function checkValidServiceWorker(swUrl, config) {
     });
 }
 
-window.self.addEventListener('fetch', function(event) {
+window.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.open('tennis-dynamic').then(function(cache) {
       return fetch(event.request).then(function(response) {
