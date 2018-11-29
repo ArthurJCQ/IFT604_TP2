@@ -24,9 +24,11 @@ class MatchArray extends Component {
 
     caches.match('/parties')
       .then(res => {
+        console.log(res);
+        console.log(res.json());
         if (!res) throw Error("No data 'parties'");
         if (!this.state.networkDataReceived) {
-          this.setState({response: res.json()});
+          //this.setState({response: res.json()});
         }
       })
       .catch(err => console.log(err));
