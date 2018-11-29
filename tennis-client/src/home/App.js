@@ -24,13 +24,16 @@ class MatchArray extends Component {
 
     caches.match('/parties')
       .then(res => {
-        console.log(res);
-        console.log(res.json());
         if (!res) throw Error("No data 'parties'");
+        return res.json();
+      })
+      .then(data => {
+        console.log(data);
         if (!this.state.networkDataReceived) {
-          //this.setState({response: res.json()});
+          this.setState({response: data});
         }
       })
+      .catch(err => console.log(err))
       .catch(err => console.log(err));
 
   }
