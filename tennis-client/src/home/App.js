@@ -26,7 +26,7 @@ class MatchArray extends Component {
       .then(res => {
         if (!res) throw Error("No data 'parties'");
         if (!this.state.networkDataReceived) {
-          this.setState({response: res});
+          this.setState({response: res.json()});
         }
       })
       .catch(err => console.log(err));
