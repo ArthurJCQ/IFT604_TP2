@@ -8,26 +8,29 @@ class MatchArray extends Component {
     super(props);
     this.state = {
       response: [],
+      networkDataReceived: false,
     }
   }
 
   componentDidMount() {
-    if(navigator.onLine) {
-      this.fetchMatchs()
-        .then(res => {
-          this.setState({response: res});
-          localStorage.setItem('matchs', JSON.stringify(res));
-        })
-        .catch(err => console.log(err));
-    }
-    else {
-      console.log("OUI");
-      if (localStorage.getItem('matchs')) {
+    this.fetchMatchs()
+      .then(res => {
         this.setState({
-          response: JSON.parse(localStorage.getItem('matchs'))
+          response: res,
+          networkDataReceived: true,
         });
-      }
-    }
+      })
+      .catch(err => console.log(err));
+
+    caches.match('/parties')
+      .then(res => {
+        if (!res) throw Error("No data 'parties'");
+        if (!networkDataReceived) {
+          this.setState({response: res});
+        }
+      })
+      .catch(err => console.log(err);
+
   }
 
   fetchMatchs = async () => {
