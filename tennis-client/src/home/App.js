@@ -22,18 +22,18 @@ class MatchArray extends Component {
       })
       .catch(err => console.log(err));
 
-    caches.match('/parties')
-      .then(res => {
-        if (!res) throw Error("No data 'parties'");
-        return res.json();
-      })
-      .then(data => {
-        if (!this.state.networkDataReceived) {
-          this.setState({response: data});
-        }
-      })
-      .catch(err => console.log(err))
-      .catch(err => console.log(err));
+    // caches.match('/parties')
+    //   .then(res => {
+    //     if (!res) throw Error("No data 'parties'");
+    //     return res.json();
+    //   })
+    //   .then(data => {
+    //     if (!this.state.networkDataReceived) {
+    //       this.setState({response: data});
+    //     }
+    //   })
+    //   .catch(err => console.log(err))
+    //   .catch(err => console.log(err));
 
   }
 
