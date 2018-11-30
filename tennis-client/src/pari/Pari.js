@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Pari.css';
 import { Redirect } from 'react-router-dom';
 import Pusher from 'pusher-js';
-// Pusher.logToConsole = true;
+Pusher.logToConsole = true;
 var Loader = require('react-loader');
 
 function FormPari(props) {
@@ -86,10 +86,9 @@ class Pari extends Component {
         var notification;
         if (localStorage.getItem('joueurPari') === data.nomJoueur) {
           console.log('PARI OK');
-          //var gains = data.montant;
-          var gains = this.state.montant*100/(data.montant*0.75);
+          const gains = localStorage.getItem('montantPari')*100/(data.montant*0.75);
           notification = new Notification("Gagné !!", {
-            body: "Vous gagnez " + data.montant + "$ pour avoir parié sur " + data.nomJoueur,
+            body: "Vous gagnez " + gains + "$ pour avoir parié sur " + data.nomJoueur,
           });
           notification.onclick = function (event) {
               event.preventDefault();
@@ -98,7 +97,6 @@ class Pari extends Component {
         }
         else{
           console.log('PARI KO');
-
           notification = new Notification("Perdu !!", {
             body: "Vous perdez votre mise pour avoir parié sur " + data.nomJoueur,
           });
@@ -117,8 +115,8 @@ class Pari extends Component {
       this.callApi()
         .then(res => {
           this.setState({pariDone: true});
-          localStorage.setItem("joueurPari", this.state.joueur.split(" ")[1]);
-          localStorage.setItem("montantPari", this.state.montant);
+          localStorage.setItem('joueurPari', this.state.joueur.split(" ")[1]);
+          localStorage.setItem('montantPari', this.state.montant);
           this.subscribePusher();
         })
         .catch(err => console.log("Erreur", err))

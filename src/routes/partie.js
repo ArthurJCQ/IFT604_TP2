@@ -26,9 +26,6 @@ router.get('/:id', function (req, res, next) {
 router.post('/:id/pari', function (req, res, next) {
     var montantPari = req.body.montantPari;
     gen.liste_partie[req.params.id].creerPari(montantPari);
-    pusher.trigger('notifications', 'pari', {
-      pari: "OK c'est fait",
-    }, req.headers['x-socket-id']);
     res.status('200').send(req.body);
 });
 
