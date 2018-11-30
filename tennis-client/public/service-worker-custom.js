@@ -1,64 +1,38 @@
-console.log('My custom service worker');
+var CACHE_DYNAMIC_NAME = 'tennis-dynamic-custom';
+var CACHE_STATIC_NAME = 'tennis-static-custom'
 
-// self.addEventListener('fetch', function(event) {
-//   event.respondWith(
-//     caches.open('tennis-dynamic').then(function(cache) {
-//       return fetch(event.request).then(function(response) {
-//         cache.put(event.request, response.clone());
-//         return response;
-//       });
-//     })
-//   );
-// });
-
-// self.addEventListener('fetch', function(event) {
-//   event.respondWith(
-//     caches.match(event.request).then(function(response) {
-//       return response || fetch(event.request);
-//     })
-//   );
-// });
-
-
-// The fetch handler serves responses for same-origin resources from a cache.
-// If no response is found, it populates the runtime cache with the response
-// from the network before returning it to the page.
-self.addEventListener('fetch', event => {
-  // Skip cross-origin requests, like those for Google Analytics.
-  //if (event.request.url.startsWith(self.location.origin)) {
-    event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-
-        return caches.open('tennis-dynamic').then(cache => {
-          return fetch(event.request).then(response => {
-            // Put a copy of the response in the runtime cache.
-            return cache.put(event.request, response.clone()).then(() => {
-              return response;
-            });
-          });
-        });
+self.addEventListener('install', function (event) {
+  console.log('Installing Service Worker ...', event);
+  event.waitUntil(
+    caches.open(CACHE_STATIC_NAME)
+      .then(function (cache) {
+        console.log('Precaching App Shell');
+        cache.addAll([
+          'offline.html', // offline page
+          'favicon.icon'
+        ]);
       })
-    );
-  //}
+  )
 });
 
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.open('tennis-dynamic').then(cache => {
-      return fetch(event.request).then(response => {
-        return cache.put(event.request, response.clone()).then(() => {
-          return response;
-        })
-      })
-    }).catch(() => {
+    // Try the network
+    fetch(event.request)
+      .then(function(res) {
+        return caches.open(CACHE_DYNAMIC_NAME)
+          .then(function(cache) {
+            // Put in cache if succeeds
+            cache.put(event.request.url, res.clone());
+            return res;
+          })
+      }).catch(() => {
       return caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {
           return cachedResponse;
         }
+        return caches.match('offline.html');
       })
     })
   )
