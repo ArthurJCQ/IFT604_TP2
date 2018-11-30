@@ -87,6 +87,7 @@ class Pari extends Component {
         if (localStorage.getItem('joueurPari') === data.nomJoueur) {
           console.log('PARI OK');
           //var gains = data.montant;
+          var gains = this.state.montant*100/(data.montant*0.75);
           notification = new Notification("Gagné !!", {
             body: "Vous gagnez " + data.montant + "$ pour avoir parié sur " + data.nomJoueur,
           });
