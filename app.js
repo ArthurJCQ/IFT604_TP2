@@ -27,8 +27,7 @@ app.use((req, res, next) => {
   // Pass to next layer of middleware
   next()
 })
-console.log("Directory : ");
-console.log(__dirname);
+
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'tennis-client/build')));
 

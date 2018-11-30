@@ -28,7 +28,6 @@ class MatchArray extends Component {
         return res.json();
       })
       .then(data => {
-        console.log(data);
         if (!this.state.networkDataReceived) {
           this.setState({response: data});
         }
