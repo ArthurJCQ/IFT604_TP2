@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Pari.css';
 import { Redirect } from 'react-router-dom';
 import Pusher from 'pusher-js';
-Pusher.logToConsole = true;
+// Pusher.logToConsole = true;
 var Loader = require('react-loader');
 
 function FormPari(props) {
@@ -70,7 +70,7 @@ class Pari extends Component {
         this.setState({
           match: match,
           data: true,
-          joueur: match.joueur1.prenom,
+          joueur: match.joueur1.prenom + " " + match.joueur1.nom,
         });
       }
     }
@@ -81,8 +81,11 @@ class Pari extends Component {
         console.log("Subscription succeeded !");
       });
       channel.bind('pari', function(data) {
+        console.log(localStorage.getItem('joueurPari'));
+        console.log(data.nomJoueur);
         var notification;
         if (localStorage.getItem('joueurPari') === data.nomJoueur) {
+          console.log('PARI OK');
           //var gains = data.montant;
           notification = new Notification("Gagné !!", {
             body: "Vous gagnez " + data.montant + "$ pour avoir parié sur " + data.nomJoueur,
@@ -93,6 +96,8 @@ class Pari extends Component {
           }
         }
         else{
+          console.log('PARI KO');
+
           notification = new Notification("Perdu !!", {
             body: "Vous perdez votre mise pour avoir parié sur " + data.nomJoueur,
           });
