@@ -43,26 +43,16 @@ class MatchArray extends Component {
   }
 
   subscribePusher(pusher) {
+    this.pusher.unsubscribe('constestations');
     var channel = this.pusher.subscribe('contestations');
     channel.bind('pusher:subscription_succeeded', function(data) {
       console.log("Subscription succeeded !");
     });
     channel.bind('contest', function(data) {
       var notification;
-      if (data.contest === 'OK') {
         console.log('CONTEST OK');
         notification = new Notification("Contestation", {
           body: "Contestation réussie pour " + data.joueur,
-        });
-        notification.onclick = function (event) {
-            event.preventDefault();
-            notification.close();
-        }
-      }
-      else if (data.contest === 'KO') {
-        console.log('CONTEST KO');
-        notification = new Notification("Contestation", {
-          body: "Contestation échouée pour " + data.joueur,
         });
         notification.onclick = function (event) {
             event.preventDefault();
