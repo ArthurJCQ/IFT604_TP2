@@ -58,8 +58,7 @@ class MatchArray extends Component {
             event.preventDefault();
             notification.close();
         }
-      }
-    });
+      });
   }
 
   render() {
