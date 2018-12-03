@@ -49,13 +49,25 @@ class MatchArray extends Component {
     });
     channel.bind('contest', function(data) {
       var notification;
-      console.log('CONTEST OK');
-      notification = new Notification("Contestation", {
-        body: "Contestation réussie pour " + data.joueur,
-      });
-      notification.onclick = function (event) {
-          event.preventDefault();
-          notification.close();
+      if (data.contest === 'OK') {
+        console.log('CONTEST OK');
+        notification = new Notification("Contestation", {
+          body: "Contestation réussie pour " + data.joueur,
+        });
+        notification.onclick = function (event) {
+            event.preventDefault();
+            notification.close();
+        }
+      }
+      else if (data.contest === 'KO') {
+        console.log('CONTEST KO');
+        notification = new Notification("Contestation", {
+          body: "Contestation échouée pour " + data.joueur,
+        });
+        notification.onclick = function (event) {
+            event.preventDefault();
+            notification.close();
+        }
       }
     });
   }

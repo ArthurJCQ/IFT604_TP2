@@ -39,11 +39,15 @@ class Partie {
       console.log(nomJoueurContestant);
       if (!Partie.contester()) {
         console.log('contestation echouee');
+        pusher.trigger('contestations', 'contest', {
+          contest: "KO",
+          joueur: nomJoueurContestant
+        });
       } else {
         contestationReussi = true;
         console.log('contestation reussie');
         pusher.trigger('contestations', 'contest', {
-          contest: "Réussie",
+          contest: "OK",
           joueur: nomJoueurContestant
         });
       }
