@@ -13,6 +13,11 @@ class MatchArray extends Component {
       networkDataReceived: false,
     }
     this.subscribePusher = this.subscribePusher.bind(this);
+
+    this.pusher = new Pusher('5309ab04bb80de5c4e76', {
+      cluster: 'us2',
+      forceTLS: true
+    });
   }
 
   componentDidMount() {
