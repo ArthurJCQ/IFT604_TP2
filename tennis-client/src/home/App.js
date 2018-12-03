@@ -12,9 +12,11 @@ class MatchArray extends Component {
       response: [],
       networkDataReceived: false,
     }
+    this.subscribePusher = this.subscribePusher.bind(this);
   }
 
   componentDidMount() {
+    this.subscribePusher();
     this.fetchMatchs()
       .then(res => {
         this.setState({
