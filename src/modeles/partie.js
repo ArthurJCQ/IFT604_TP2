@@ -36,6 +36,7 @@ class Partie {
       const contestant = Math.floor(Math.random() * 2);
       this.constestation[contestant] = Math.max(0, this.constestation[contestant] - 1);
       const nomJoueurContestant = (contestant === 1) ? this.joueur1.prenom : this.joueur2.prenom;
+      console.log(nomJoueurContestant);
       if (!Partie.contester()) {
         console.log('contestation echouee');
       } else {
@@ -43,7 +44,7 @@ class Partie {
         console.log('contestation reussie');
         pusher.trigger('contestations', 'contest', {
           contest: "Réussie",
-          joueur: this.nomJoueurContestant
+          joueur: nomJoueurContestant
         });
       }
     }
