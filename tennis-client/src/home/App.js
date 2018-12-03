@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import '../match/Match.js';
 import { Redirect } from 'react-router-dom';
+import Pusher from 'pusher-js';
+Pusher.logToConsole = true;
 
 class MatchArray extends Component {
   constructor(props) {
@@ -19,22 +21,9 @@ class MatchArray extends Component {
           response: res,
           networkDataReceived: true,
         });
+
       })
       .catch(err => console.log(err));
-
-    // caches.match('/parties')
-    //   .then(res => {
-    //     if (!res) throw Error("No data 'parties'");
-    //     return res.json();
-    //   })
-    //   .then(data => {
-    //     if (!this.state.networkDataReceived) {
-    //       this.setState({response: data});
-    //     }
-    //   })
-    //   .catch(err => console.log(err))
-    //   .catch(err => console.log(err));
-
   }
 
   fetchMatchs = async () => {
@@ -44,6 +33,24 @@ class MatchArray extends Component {
     if (response.status !== 200) throw Error(body.message);
 
     return body;
+  }
+
+  subscribePusher(pusher) {
+    var channel = this.pusher.subscribe('contestations');
+    channel.bind('pusher:subscription_succeeded', function(data) {
+      console.log("Subscription succeeded !");
+    });
+    channel.bind('contest', function(data) {
+      var notification;
+      console.log('CONTEST OK');
+      notification = new Notification("Contestation", {
+        body: "Contestation réussie pour " + data.joueur,
+      });
+      notification.onclick = function (event) {
+          event.preventDefault();
+          notification.close();
+      }
+    });
   }
 
   render() {

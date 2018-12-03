@@ -18,6 +18,7 @@ router.get('/', function (req, res, next) {
   res.send(gen.liste_partie);
 });
 
+/* GET a partie with its id */
 router.get('/:id', function (req, res, next) {
   res.send(gen.liste_partie[req.params.id]);
 });

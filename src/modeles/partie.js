@@ -1,4 +1,13 @@
 const Pointage = require('./pointage.js');
+const Pusher = require('pusher');
+
+const pusher = new Pusher({
+  appId: '657947',
+  key: '5309ab04bb80de5c4e76',
+  secret: 'fb624ea8a12c4f3eb5ad',
+  cluster: 'us2',
+  encrypted: true
+});
 
 class Partie {
   constructor (id, joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut) {
@@ -26,11 +35,16 @@ class Partie {
     if ((Math.random() * 100) < 3) { // 3% de contestation
       const contestant = Math.floor(Math.random() * 2);
       this.constestation[contestant] = Math.max(0, this.constestation[contestant] - 1);
+      const nomJoueurContestant = (contestant === 1) ? this.joueur1.prenom : this.joueur2.prenom;
       if (!Partie.contester()) {
         console.log('contestation echouee');
       } else {
         contestationReussi = true;
         console.log('contestation reussie');
+        pusher.trigger('contestations', 'contest', {
+          contest: "Réussie",
+          joueur: this.nomJoueurContestant
+        });
       }
     }
 
