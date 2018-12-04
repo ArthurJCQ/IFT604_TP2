@@ -43,7 +43,6 @@ class MatchArray extends Component {
   }
 
   subscribePusher(pusher) {
-    this.pusher.unsubscribe('constestations');
     var channel = this.pusher.subscribe('contestations');
     channel.bind('pusher:subscription_succeeded', function(data) {
       console.log("Subscription succeeded !");
@@ -59,6 +58,10 @@ class MatchArray extends Component {
             notification.close();
         }
       });
+  }
+
+  componentWillUnmount() {
+    this.pusher.unsubscribe('constestations');
   }
 
   render() {
